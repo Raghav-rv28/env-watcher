@@ -27,8 +27,10 @@ This can be converted into a Go executable and used to run an automatic service 
       WantedBy=multi-user.target
     ```
     Replace /path/to/file_watcher with the actual path to your compiled Go executable.
+
    2. Enable the service to start at boot:
       ``` sudo systemctl enable file_watcher.service ```
+      
    3. Start the service:
       ``` sudo systemctl start file_watcher.service ```
 This will start your Go executable as a background service and ensure it starts automatically on system boot.
