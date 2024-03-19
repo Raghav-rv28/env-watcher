@@ -8,7 +8,7 @@ This can be converted into a Go executable and used to run an automatic service 
 
 1. open main.go in your IDE and change all the places where FIXME is commented: (directory to be watched & env variables for AWS).
 
-  ![image](https://github.com/Raghav-rv28/env-watcher/assets/62635473/a9e62343-719c-4442-9179-fdc9a2df488a)
+![image](https://github.com/Raghav-rv28/env-watcher/assets/62635473/39aba1f8-dd31-4df5-97b8-365dcae323f7)
 
 3. Compile your Go code into a binary executable. Assuming your Go code is in a file named main.go, you can compile it like this:
    ```
