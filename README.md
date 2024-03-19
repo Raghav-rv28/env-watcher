@@ -34,7 +34,7 @@ This can be converted into a Go executable and used to run an automatic service 
       sudo systemctl enable file_watcher.service
       ```
       
-   4. Start the service:
+   3. Start the service:
       
       ```
       sudo systemctl start file_watcher.service
