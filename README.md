@@ -29,10 +29,13 @@ This can be converted into a Go executable and used to run an automatic service 
     Replace /path/to/file_watcher with the actual path to your compiled Go executable.
 
    2. Enable the service to start at boot:
+      
       ``` sudo systemctl enable file_watcher.service ```
       
-   3. Start the service:
+   4. Start the service:
+      
       ``` sudo systemctl start file_watcher.service ```
+
 This will start your Go executable as a background service and ensure it starts automatically on system boot.
 
 For Windows, you would follow similar steps, but you'll need to create a Windows service instead of a systemd service. You can use tools like NSSM (Non-Sucking Service Manager) to create and manage Windows services.
