@@ -33,6 +33,7 @@ func uploadToS3(filePath string) error {
 		return err
 	}
 	defer file.Close()
+
 	AWS_REGION, exists := os.LookupEnv("AWS_REGION")
 	if !exists {
 		fmt.Println("env variable not found")
@@ -55,11 +56,13 @@ func uploadToS3(filePath string) error {
 	}))
 
 	svc := s3.New(sess)
-	dir := filepath.Dir(filePath)
-	key := strings.TrimPrefix(filePath, DIRECTORY_TO_WATCH)
-	key = strings.TrimPrefix(key, "/")
-	key = filepath.Join(dir, key)
+	dir := filepath.Base(filepath.Dir(filePath))
+	fmt.Println(dir)
 
+	filename := filepath.Base(filePath)
+	key := filepath.Join(dir, filename)
+
+	fmt.Println(key)
 	_, err = svc.PutObject(&s3.PutObjectInput{
 		Bucket: aws.String(AWS_BUCKET_NAME),
 		Key:    aws.String(key),
