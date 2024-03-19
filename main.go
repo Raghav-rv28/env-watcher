@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -12,19 +11,18 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/fsnotify/fsnotify"
-	"github.com/joho/godotenv"
 )
 
-// Directory to watch
+// FIXME: Directory to watch
 var DIRECTORY_TO_WATCH = "/home/raghav/code"
 
-// init function which adds environment variables to runtime.
-func init() {
-	// loads values from .env into the system
-	if err := godotenv.Load(); err != nil {
-		log.Print("No .env file found")
-	}
-}
+// FIXME: add your own credentials & bucket & region.
+const (
+	AWS_REGION        = ""
+	AWS_SECRET_KEY    = ""
+	AWS_ACCESS_KEY_ID = ""
+	AWS_BUCKET_NAME   = ""
+)
 
 // Function to upload file to S3
 func uploadToS3(filePath string) error {
@@ -34,22 +32,6 @@ func uploadToS3(filePath string) error {
 	}
 	defer file.Close()
 
-	AWS_REGION, exists := os.LookupEnv("AWS_REGION")
-	if !exists {
-		fmt.Println("env variable not found")
-	}
-	AWS_SECRET_KEY, exists := os.LookupEnv("AWS_SECRET_KEY")
-	if !exists {
-		fmt.Println("env variable not found")
-	}
-	AWS_ACCESS_KEY_ID, exists := os.LookupEnv("AWS_ACCESS_KEY_ID")
-	if !exists {
-		fmt.Println("env variable not found")
-	}
-	AWS_BUCKET_NAME, exists := os.LookupEnv("AWS_BUCKET_NAME")
-	if !exists {
-		fmt.Println("env variable not found")
-	}
 	sess := session.Must(session.NewSession(&aws.Config{
 		Region:      aws.String(AWS_REGION),
 		Credentials: credentials.NewStaticCredentials(AWS_ACCESS_KEY_ID, AWS_SECRET_KEY, ""),
@@ -104,12 +86,6 @@ func main() {
 			if event.Op&fsnotify.Create == fsnotify.Create {
 				if strings.Contains(event.Name, ".env") || strings.Contains(event.Name, ".env.local") {
 					fmt.Println("New file created:", event.Name)
-					// dir := filepath.Dir(event.Name)
-					// // Create a directory with the same name as the file being uploaded
-					// errDir := os.MkdirAll(dir, os.ModePerm)
-					// if errDir != nil {
-					// 	fmt.Println("Error creating directory:", err)
-					// }
 					// uploadToS3
 					err := uploadToS3(event.Name)
 					if err != nil {
