@@ -6,12 +6,16 @@ Tired of taking care of your .env files? no more. this script automatically uplo
 This can be converted into a Go executable and used to run an automatic service in the background:
 ## steps for Linux:
 
-1. Compile your Go code into a binary executable. Assuming your Go code is in a file named main.go, you can compile it like this:
+1. open main.go in your IDE and change all the places where FIXME is commented: (directory to be watched & env variables for AWS).
+
+![image](https://github.com/Raghav-rv28/env-watcher/assets/62635473/39aba1f8-dd31-4df5-97b8-365dcae323f7)
+
+3. Compile your Go code into a binary executable. Assuming your Go code is in a file named main.go, you can compile it like this:
    ```
    go build -o file_watcher main.go
    ```
-2. you'll need to run the executable as a background service. By using systemd to create a service that runs the executable in the background.
-3. To configure this service to run on startup: You can add a systemd service for the executable and enable it to start at boot.
+4. you'll need to run the executable as a background service. By using systemd to create a service that runs the executable in the background.
+5. To configure this service to run on startup: You can add a systemd service for the executable and enable it to start at boot.
    For example, to create a systemd service for your Go executable on Linux:
     1. Create a systemd service file, e.g., 'file_watcher.service', in '/etc/systemd/system/':
     ```
@@ -43,3 +47,16 @@ This can be converted into a Go executable and used to run an automatic service 
 This will start your Go executable as a background service and ensure it starts automatically on system boot.
 
 For Windows, you would follow similar steps, but you'll need to create a Windows service instead of a systemd service. You can use tools like NSSM (Non-Sucking Service Manager) to create and manage Windows services.
+
+
+---
+You can try restarting the service again when making some changes using the following command:
+```
+sudo systemctl restart file_watcher.service
+
+```
+
+If the service still fails to start, check the systemd journal for more detailed error messages that can help pinpoint the issue:
+```
+sudo journalctl -xe
+```
