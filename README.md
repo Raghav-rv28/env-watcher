@@ -2,6 +2,8 @@
 Tired of taking care of your .env files? no more. this script automatically encrypts all your .env files and creates a copy in the same directory which you can keep with the project/repo. any changes in the .env file(s) will automatically be reflected if the service is running in background.
 You can easily decrypt those files and it will override the orignal (unencrypted) files or create a new one if not there.
 
+DISCLAIMER: for most scenarios, **YOU DONT NEED THIS**. I have created this for people who want to keep their env files in the same repo and not have to worry about key theft.
+ 
 ## Requirements
 
 -   Go programming language (for building the Encryptor and Decryptor). 
