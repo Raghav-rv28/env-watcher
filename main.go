@@ -18,9 +18,9 @@ var DIRECTORY_TO_WATCH = "/home/raghav/code"
 
 // FIXME: add your own credentials & bucket & region.
 const (
-	AWS_REGION        = ""
-	AWS_SECRET_KEY    = ""
 	AWS_ACCESS_KEY_ID = ""
+	AWS_SECRET_KEY    = ""
+	AWS_REGION        = ""
 	AWS_BUCKET_NAME   = ""
 )
 
@@ -83,9 +83,9 @@ func main() {
 	for {
 		select {
 		case event := <-watcher.Events:
-			if event.Op&fsnotify.Create == fsnotify.Create {
-				if strings.Contains(event.Name, ".env") || strings.Contains(event.Name, ".env.local") {
-					fmt.Println("New file created:", event.Name)
+			if event.Op&fsnotify.Create == fsnotify.Create || event.Op&fsnotify.Write == fsnotify.Write {
+				if (strings.Contains(event.Name, ".env") || strings.Contains(event.Name, ".env.local")) && !strings.Contains(event.Name, "~") {
+					fmt.Println("New file event:", event.Name)
 					// uploadToS3
 					err := uploadToS3(event.Name)
 					if err != nil {
