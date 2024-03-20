@@ -5,7 +5,6 @@ go 1.22.1
 require (
 	github.com/aws/aws-sdk-go v1.51.3
 	github.com/fsnotify/fsnotify v1.7.0
-	github.com/joho/godotenv v1.5.1
 )
 
 require (

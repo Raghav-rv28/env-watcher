@@ -13,15 +13,13 @@ import (
 	"github.com/fsnotify/fsnotify"
 )
 
-// FIXME: Directory to watch
-var DIRECTORY_TO_WATCH = "/home/raghav/code"
-
-// FIXME: add your own credentials & bucket & region.
-const (
-	AWS_ACCESS_KEY_ID = ""
-	AWS_SECRET_KEY    = ""
-	AWS_REGION        = ""
-	AWS_BUCKET_NAME   = ""
+// vars to control s3 login creds and `.env` file location
+var (
+	DIRECTORY_TO_WATCH = os.Getenv("DIRECTORY_TO_WATCH")
+	AWS_ACCESS_KEY_ID  = os.Getenv("AWS_ACCESS_KEY_ID")
+	AWS_SECRET_KEY     = os.Getenv("AWS_SECRET_KEY")
+	AWS_REGION         = os.Getenv("AWS_REGION")
+	AWS_BUCKET_NAME    = os.Getenv("AWS_BUCKET_NAME")
 )
 
 // Function to upload file to S3
@@ -64,20 +62,26 @@ func main() {
 	defer watcher.Close()
 
 	// Function to walk through directory tree and watch for changes
-	filepath.Walk(DIRECTORY_TO_WATCH, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			fmt.Println("Error:", err)
-			return nil
-		}
-		if info.IsDir() {
-			err = watcher.Add(path)
+	fileError := filepath.Walk(DIRECTORY_TO_WATCH,
+		func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				fmt.Println("Error:", err)
 				return nil
 			}
-		}
-		return nil
-	})
+			if info.IsDir() {
+				err = watcher.Add(path)
+				if err != nil {
+					fmt.Println("Error:", err)
+					return nil
+				}
+			}
+			return nil
+		})
+
+	if fileError != nil {
+		fmt.Fscanf(os.Stderr, "%v", fileError)
+		return
+	}
 
 	// Process events
 	for {
