@@ -1,5 +1,5 @@
 # Environment Watcher
-Tired of taking care of your .env files? no more. this script automatically encrypts all your .env files and creates a copy in the same directory which you can keep with the repo. any changes in the .env file(s) will automatically be reflected if the service is running in background.
+Tired of taking care of your .env files? no more. this script automatically encrypts all your .env files and creates a copy in the same directory which you can keep with the project/repo. any changes in the .env file(s) will automatically be reflected if the service is running in background.
 You can easily decrypt those files and it will override the orignal (unencrypted) files or create a new one if not there.
 
 ## Requirements
