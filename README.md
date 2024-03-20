@@ -47,3 +47,16 @@ This can be converted into a Go executable and used to run an automatic service 
 This will start your Go executable as a background service and ensure it starts automatically on system boot.
 
 For Windows, you would follow similar steps, but you'll need to create a Windows service instead of a systemd service. You can use tools like NSSM (Non-Sucking Service Manager) to create and manage Windows services.
+
+
+---
+You can try restarting the service again when making some changes using the following command:
+```
+sudo systemctl restart file_watcher.service
+
+```
+
+If the service still fails to start, check the systemd journal for more detailed error messages that can help pinpoint the issue:
+```
+sudo journalctl -xe
+```
