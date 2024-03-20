@@ -15,6 +15,11 @@ If you don't have go, follow these instructions: https://go.dev/doc/install
 -   **Decryption**: Decrypt encrypted files using a encryption key,
 -  **Scripts** : Easy installation and Deletion scripts for Linux (windows coming soon!).
 
+## Steps
+- clone this git repo: `git clone https://github.com/Raghav-rv28/env-watcher`
+- open the repo in terminal (make sure the terminal is at the repo level where the install.sh script is present).
+- Follow Encryption steps for further setup.
+
 ## Usage ( Encryption Service )
 #### To start the encryption service follow these steps:
 1.  **Install**: Run the `install.sh` script to configure the environment and install the necessary dependencies.
