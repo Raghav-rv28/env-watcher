@@ -21,7 +21,7 @@ If you don't have go, follow these instructions: https://go.dev/doc/install
 - Follow Encryption steps for further setup.
 
 ## Usage ( Encryption Service )
-#### To start the encryption service follow these steps:
+#### To start the encryption service follow these steps (only needs to be done once): 
 1.  **Install**: Run the `install.sh` script to configure the environment and install the necessary dependencies.
 2.  **Watch Directory**: Specify the directory to watch for `.env` files.
 3.  **Encryption Key**: Provide a 16 or 32 character encryption key.
