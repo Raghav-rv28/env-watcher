@@ -13,13 +13,6 @@ import (
 	"github.com/fsnotify/fsnotify"
 )
 
-// FIXME: Enter your directory to watch
-// Key used for AES encryption (must be 16, 24, or 32 bytes long)
-var (
-	DIRECTORY_TO_WATCH = "/home/raghav/code"
-	// encryptionKey      = []byte("8InozOWEmOxAgIKiSeWeHEKipIvIdUC]")
-)
-
 // Function to encrypt a file
 func encryptFile(filePath string, encryptionKey []byte) error {
 	// Open the input file
