@@ -1,62 +1,42 @@
-# env-watcher
+# Environment Watcher
 
-Tired of taking care of your .env files? no more. this script automatically uploads all your files to S3 in the background without you having to lift a finger!
+This repository contains a set of scripts for monitoring environment files in a specified directory and performing actions based on changes.
 
+## Requirements
 
-This can be converted into a Go executable and used to run an automatic service in the background:
-## steps for Linux:
+-   Go programming language (for building the Encryptor and Decryptor). 
+If you don't have go, follow these instructions: https://go.dev/doc/install
+-   Linux (Windows coming soon) operating system.
 
-1. open main.go in your IDE and change all the places where FIXME is commented: (directory to be watched & env variables for AWS).
+## Features
 
-![image](https://github.com/Raghav-rv28/env-watcher/assets/62635473/39aba1f8-dd31-4df5-97b8-365dcae323f7)
+-   **File Watcher**: Monitors a directory for changes to `.env` files. Automatically encrypts  the `.env` files. it will save the file in the same directory where the original file was located. If a file name contains .env, a copy of that file will be created with a suffix `.enc` Ex: `.env` will be converted to `.env.enc`
+-   **Encryption**: Encryption using AES cipher in Galois Counter Mode (GCM). 
+-   **Decryption**: Decrypt encrypted files using a encryption key,
+-  **Scripts** : Easy installation and Deletion scripts for Linux (windows coming soon!).
 
-3. Compile your Go code into a binary executable. Assuming your Go code is in a file named main.go, you can compile it like this:
-   ```
-   go build -o file_watcher main.go
-   ```
-4. you'll need to run the executable as a background service. By using systemd to create a service that runs the executable in the background.
-5. To configure this service to run on startup: You can add a systemd service for the executable and enable it to start at boot.
-   For example, to create a systemd service for your Go executable on Linux:
-    1. Create a systemd service file, e.g., 'file_watcher.service', in '/etc/systemd/system/':
-    ```
-    [Unit]
-      Description=File Watcher Service
-      After=network.target
-      
-      [Service]
-      ExecStart=/path/to/file_watcher
-      Restart=always
-      
-      [Install]
-      WantedBy=multi-user.target
-    ```
-    Replace /path/to/file_watcher with the actual path to your compiled Go executable.
+## Usage ( Encryption Service )
+#### To start the encryption service follow these steps:
+1.  **Install**: Run the `install.sh` script to configure the environment and install the necessary dependencies.
+2.  **Watch Directory**: Specify the directory to watch for `.env` files.
+3.  **Encryption Key**: Provide a 16 or 32 character encryption key.
+4.  **Start Service**: The File Watcher service is automatically started and will monitor the specified directory for changes.
 
-   2. Enable the service to start at boot:
-      
-      ```
-      sudo systemctl enable file_watcher.service
-      ```
-      
-   3. Start the service:
-      
-      ```
-      sudo systemctl start file_watcher.service
-      ```
-
-This will start your Go executable as a background service and ensure it starts automatically on system boot.
-
-For Windows, you would follow similar steps, but you'll need to create a Windows service instead of a systemd service. You can use tools like NSSM (Non-Sucking Service Manager) to create and manage Windows services.
-
-
----
-You can try restarting the service again when making some changes using the following command:
+## Usage ( Decryption Service )
+#### To decrypt a particular file use the following command:
 ```
-sudo systemctl restart file_watcher.service
+decrypt <filename> <encryption-key>
+```
+specify the key you used when starting the encryption service.
+## Directory Structure
 
-```
+-   `Encryptor/`: Contains the source code for the Encryptor application.
+-   `Decryptor/`: Contains the source code for the Decryptor application.
+-   `install.sh`: Setup script for configuring the environment and installing dependencies.
+-  `delete.sh`: if you don't want to have this setup any longer, just use delete.sh to remove all installation files/data. **Once you do this, you will need to use a new key!** 
+-   `README.md`: This file.
+-   `.env.enc`: sample encrypted file.
 
-If the service still fails to start, check the systemd journal for more detailed error messages that can help pinpoint the issue:
-```
-sudo journalctl -xe
-```
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
