@@ -17,11 +17,11 @@ import (
 // Key used for AES encryption (must be 16, 24, or 32 bytes long)
 var (
 	DIRECTORY_TO_WATCH = "/home/raghav/code"
-	encryptionKey      = []byte("")
+	// encryptionKey      = []byte("8InozOWEmOxAgIKiSeWeHEKipIvIdUC]")
 )
 
 // Function to encrypt a file
-func encryptFile(filePath string) error {
+func encryptFile(filePath string, encryptionKey []byte) error {
 	// Open the input file
 	inputFile, err := os.Open(filePath)
 	if err != nil {
@@ -71,6 +71,17 @@ func encryptFile(filePath string) error {
 }
 
 func main() {
+	encryptionKey, exists := os.LookupEnv("ENCRYPTION_KEY")
+	if !exists {
+		fmt.Println("ENCRYPTION_KEY not found as env variable! create the env variable and try again")
+		return
+	}
+	if len(os.Args) < 2 {
+		fmt.Println("Usage: file-watcher <path-to-watch>")
+		return
+	}
+
+	DIRECTORY_TO_WATCH := os.Args[1]
 	// Create a new file watcher
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
@@ -104,7 +115,7 @@ func main() {
 					!strings.Contains(event.Name, "~") && !strings.Contains(event.Name, ".enc") {
 					fmt.Println("New file event:", event.Name, event.Op)
 					// uploadToS3
-					err := encryptFile(event.Name)
+					err := encryptFile(event.Name, []byte(encryptionKey))
 					if err != nil {
 						fmt.Println("Error Encrypting the file:", err)
 					} else {

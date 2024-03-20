@@ -9,11 +9,8 @@ import (
 	"strings"
 )
 
-// Key used for AES encryption (must be 16, 24, or 32 bytes long)
-var encryptionKey = []byte("")
-
 // Function to decrypt a file
-func decryptFile(filePath string) error {
+func decryptFile(filePath string, encryptionKey []byte) error {
 	// Open the encrypted file
 	encryptedFile, err := os.Open(filePath)
 	if err != nil {
@@ -58,16 +55,21 @@ func decryptFile(filePath string) error {
 }
 
 func main() {
+	if len(os.Args) < 3 {
+		fmt.Println("ENCRYPTION_KEY not found, Usage: decrypt <file> <secret-key>")
+		return
+	}
 	if len(os.Args) < 2 {
-		fmt.Println("Usage: go run decrypt.go <file>")
+		fmt.Println("Enter the arguments !Usage: decrypt <file> <secret-key>")
 		return
 	}
 
 	filePath := os.Args[1]
+	encryptionKey := os.Args[2]
 
 	// Decrypt the file if its name contains a certain string
 	if strings.Contains(filePath, "env") && strings.HasSuffix(filePath, ".enc") {
-		err := decryptFile(filePath)
+		err := decryptFile(filePath, []byte(encryptionKey))
 		if err != nil {
 			fmt.Println("Error decrypting file:", err)
 			return
