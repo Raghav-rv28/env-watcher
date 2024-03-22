@@ -18,7 +18,7 @@ DISCLAIMER: for most scenarios, **YOU DONT NEED THIS**. I have created this for 
 - **Decryption**: Decrypt encrypted files using a encryption key,
 - **Scripts** : Easy installation and Deletion scripts for Linux (windows coming soon!).
 
-## Steps (on terminal)
+## Installation Steps (on terminal)
 
 - clone this git repo: `git clone https://github.com/Raghav-rv28/env-watcher`
 - cd into your OS folder name (windows and Linux), and start the installation script (make sure you have administer privileges for windows)
@@ -121,6 +121,9 @@ Windows: `for /f "tokens=2 delims==" %i in ('findstr "encryption_key" "%USERPROF
 
 1. Ensure that the service has appropriate permissions to access the directories and files it needs.
 2. Check for any permission-related errors in the logs/output.
+
+#### Reset Env Watcher:
+1. use the delete scripts for your respective OS and start with a fresh installation.
 
 ## License
 
