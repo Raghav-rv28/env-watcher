@@ -72,7 +72,7 @@ Windows: `for /f "tokens=2 delims==" %i in ('findstr "encryption_key" "%USERPROF
 1. Open a terminal or Command Prompt window.
 2. Run the following command to check the status of the file_watcher service:
    - **Linux (systemd):**
-     ```bash
+     ```sh
      sudo systemctl status file_watcher
      ```
    - **Windows (Command Prompt):**
@@ -85,7 +85,7 @@ Windows: `for /f "tokens=2 delims==" %i in ('findstr "encryption_key" "%USERPROF
 1. If the service is running but encountering issues, you can view its output for debugging purposes.
 2. Run the following command to view the service logs:
    - **Linux (systemd):**
-     ```bash
+     ```sh
      sudo journalctl -u file_watcher
      ```
    - **Windows (Event Viewer):**
@@ -103,7 +103,7 @@ Windows: `for /f "tokens=2 delims==" %i in ('findstr "encryption_key" "%USERPROF
 1. If the service is not running or encountering issues, you can try restarting it.
 2. Run the following commands to restart the service:
    - **Linux (systemd):**
-     ```bash
+     ```sh
      sudo systemctl restart file_watcher
      ```
    - **Windows (Command Prompt):**
