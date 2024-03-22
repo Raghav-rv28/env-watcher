@@ -35,6 +35,12 @@ If you don't have go, follow these instructions: https://go.dev/doc/install
 decrypt <filename> <encryption-key>
 ```
 specify the key you used when starting the encryption service.
+
+The file `~/.file_watcher_env` is located in your `/home/<username>/` directory, you can grab the encryption token from there directly.
+
+Grab the encryption key using this:
+
+```grep -o 'ENCRYPTION_KEY=.*' ~/.file_watcher_env | cut -d '=' -f 2 ``` 
 ## Directory Structure
 
 -   `Encryptor/`: Contains the source code for the Encryptor application.
