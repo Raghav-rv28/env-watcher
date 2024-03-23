@@ -1,5 +1,7 @@
 @echo off
 
+rem Go to the root of the project.
+cd ..
 rem Prompt the user to enter a 16 or 32 byte character string for encryption key
 set /p encryption_key="Enter the encryption key (16 or 32 characters): "
 

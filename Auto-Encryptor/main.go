@@ -105,7 +105,7 @@ func main() {
 		case event := <-watcher.Events:
 			if event.Op&fsnotify.Create == fsnotify.Create || event.Op&fsnotify.Write == fsnotify.Write {
 				if (strings.Contains(event.Name, ".env") || strings.Contains(event.Name, ".env.local")) &&
-					!strings.Contains(event.Name, "~") && !strings.Contains(event.Name, ".enc") {
+					!strings.Contains(event.Name, "~") && !strings.Contains(event.Name, ".enc") && !strings.Contains(event.Name, ".share") {
 					fmt.Println("New file event:", event.Name, event.Op)
 					// uploadToS3
 					err := encryptFile(event.Name, []byte(encryptionKey))

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd ..
 # prompt the user to enter a 16 or 32 byte character string for encryption key
 read -p "enter the encryption key (16 or 32 characters): " encryption_key
 
@@ -13,7 +14,7 @@ echo "watch_directory=$watch_directory" >>~/.file_watcher_env
 chmod 600 ~/.file_watcher_env
 
 # build the encryptor
-cd encryptor
+cd Auto-Encryptor
 go build -o file_watcher main.go
 
 # move the file_watcher executable to /usr/local/bin
@@ -24,36 +25,37 @@ sudo chmod +x /usr/local/bin/file_watcher
 
 # automatically start file_watcher on pc startup
 # create a systemd service file
-echo "[unit]
-description=file watcher service
-after=network.target
+cat <<EOF | sudo tee /etc/systemd/system/file_watcher.service
+[Unit]
+Description=file watcher service
+After=network.target
 
-[service]
-type=simple
-environmentfile=/home/$(whoami)/.file_watcher_env
-execstart=/usr/local/bin/file_watcher \$watch_directory
-restart=always
-restartsec=3
+[Service]
+Type=simple
+EnvironmentFile=/home/$(whoami)/.file_watcher_env
+ExecStart=/usr/local/bin/file_watcher "\$watch_directory"
+Restart=always
+RestartSec=3
 
-[install]
-wantedby=multi-user.target" | sudo tee /etc/systemd/system/file_watcher.service
-
+[Install]
+WantedBy=multi-user.target
+EOF
 # reload systemd daemon and start the service
 sudo systemctl daemon-reload
 sudo systemctl enable file_watcher
 sudo systemctl start file_watcher
 
 # build the decryptor
-cd ../decryptor
-go build -o decrypt main.go
+cd ../Cryptor/
+go build -o cryptor main.go
 
 # copy the decrypt executable to /usr/local/bin
-sudo cp decrypt /usr/local/bin/
+sudo cp cryptor /usr/local/bin/
 
 # make decrypt executable
-sudo chmod +x /usr/local/bin/decrypt
+sudo chmod +x /usr/local/bin/cryptor
 
 echo "installation complete."
 echo "file watcher is set to start on pc startup and will watch the directory: $watch_directory."
 echo "the decryption key is set to: $encryption_key."
-echo "file_watcher executable and decrypt executable are copied to /usr/local/bin"
+echo "file_watcher executable and cryptor executable are copied to /usr/local/bin"
