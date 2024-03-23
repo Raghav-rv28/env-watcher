@@ -131,3 +131,7 @@ Windows: `for /f "tokens=2 delims==" %i in ('findstr "encryption_key" "%USERPROF
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
+## NOTES FOR AUTHOR:
+TODO:
+1. add a client side UI to easily encrypt and decrypt these files online.
+2. create installation scripts only for cryptor service. (Linux and Windows)
