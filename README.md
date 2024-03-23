@@ -13,8 +13,6 @@ DISCLAIMER: for most scenarios, **YOU DONT NEED THIS**. I have created this for 
 
 ## Features
 
-- 
-
 - **Auto Encryptor**: Monitors a directory for changes to `.env` files. Automatically encrypts the `.env` files. it will save the file in the same directory where the original file was located. If a file name contains .env, a copy of that file will be created with a suffix `.enc` Ex: `.env` will be converted to `.env.enc`
 - **Cryptor**:  Manual Encryption/Decryption script using AES cipher in Galois Counter Mode (GCM). **Share with your friends** using manual encryption mode and provide them with the key used during the manual process (the file wont be generated without a new key, it is advised you use a different key then the default one). 
 - **Scripts** : Easy installation and Deletion scripts for Linux and Windows.
