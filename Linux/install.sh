@@ -27,13 +27,13 @@ sudo chmod +x /usr/local/bin/file_watcher
 # create a systemd service file
 cat <<EOF | sudo tee /etc/systemd/system/file_watcher.service
 [Unit]
-Description=file watcher service
+Description=File Watcher Service
 After=network.target
 
 [Service]
 Type=simple
 EnvironmentFile=/home/$(whoami)/.file_watcher_env
-ExecStart=/usr/local/bin/file_watcher "\$watch_directory"
+ExecStart=/usr/local/bin/file_watcher \$watch_directory
 Restart=always
 RestartSec=3
 

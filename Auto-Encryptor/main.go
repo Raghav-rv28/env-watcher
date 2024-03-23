@@ -64,7 +64,7 @@ func encryptFile(filePath string, encryptionKey []byte) error {
 }
 
 func main() {
-	encryptionKey, exists := os.LookupEnv("ENCRYPTION_KEY")
+	encryptionKey, exists := os.LookupEnv("encryption_key")
 	if !exists {
 		fmt.Println("ENCRYPTION_KEY not found as env variable! create the env variable and try again")
 		return
