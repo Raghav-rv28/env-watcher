@@ -11,8 +11,8 @@ set "watch_directory=%watch_directory%"
 
 
 rem Set environment variables
-setx ENCRYPTION_KEY "%encryption_key%"
-setx WATCH_DIRECTORY "%watch_directory%"
+setx encryption_key "%encryption_key%"
+setx watch_directory "%watch_directory%"
 
 rem Store the environment variables in a new file
 echo encryption_key=%encryption_key% > "%USERPROFILE%\.file_watcher_env"
