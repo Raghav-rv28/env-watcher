@@ -27,18 +27,23 @@ DISCLAIMER: for most scenarios, **YOU DONT NEED THIS**. I have created this for 
 -  **Start Service**: The File Watcher service is automatically started and will monitor the specified directory for changes. (on Windows you might need to restart)
 
 ## Usage ( Cryptor Service )
+
 Arugments:
  1. process: "encrypt" / "decrypt", tells the script to either encrypt the file or decrypt.
  2. filename: name of the file
  3. encryption-key: encryption key to be used to either encrypt a file or decrypt an encrypted file. 
-#### To Encrypt a file manually:
-```
+#### To Encrypt a file manually
+
+```sh
 cryptor encrypt <filename> <encryption-key>
 ```
-#### To Decrypt a file manually:
-```
+
+#### To Decrypt a file manually
+
+```sh
 cryptor decrypt <filename> <encryption-key>
 ```
+
 If the file name contains .share, it was created using a custom encryption key and only that key will unencrypt the file. 
 If a file is encrypted and doesn't have .share (only .enc) specify the default key you used when starting the encryption service.
 
@@ -95,43 +100,49 @@ Windows: `for /f "tokens=2 delims==" %i in ('findstr "encryption_key" "%USERPROF
      - Navigate to Windows Logs > Application.
      - Look for logs related to the file_watcher service.
 
-#### Checking for Errors:
+#### Checking for Errors
 
 1. Look for any error messages or warnings in the output/logs.
 2. Pay attention to any specific error codes or messages that indicate issues with the service.
 
-#### Restarting the Service:
+#### Restarting the Service
 
 1. If the service is not running or encountering issues, you can try restarting it.
 2. Run the following commands to restart the service:
    - **Linux (systemd):**
-     ```sh
+
+```sh
      sudo systemctl restart file_watcher
      ```
-   - **Windows (Command Prompt):**
-     ```batch
+
+- **Windows (Command Prompt):**
+
+```batch
      sc stop file_watcher
      sc start file_watcher
      ```
 
-#### Reviewing Configuration:
+#### Reviewing Configuration
 
 1. Double-check the configuration settings, including the encryption key and watch directory, to ensure they are correct.
 2. Make any necessary adjustments to the configuration if errors are found.
 
-#### Verifying Permissions:
+#### Verifying Permissions
 
 1. Ensure that the service has appropriate permissions to access the directories and files it needs.
 2. Check for any permission-related errors in the logs/output.
 
-#### Reset Env Watcher:
+#### Reset Env Watcher
+
 1. use the delete scripts for your respective OS and start with a fresh installation.
 
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## NOTES FOR AUTHOR:
+## NOTES FOR AUTHOR
+
 TODO:
-1. add a client side UI to easily encrypt and decrypt these files online.
+1. Add options to ignore certain directories
 2. create installation scripts only for cryptor service. (Linux and Windows)
+3. add more configure options for the files being watched.

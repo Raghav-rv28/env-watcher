@@ -1,4 +1,4 @@
-module env-watcher
+module github.com/raghav-rv28/env-watcher
 
 go 1.22.1
 
