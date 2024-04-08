@@ -113,14 +113,14 @@ Windows: `for /f "tokens=2 delims==" %i in ('findstr "encryption_key" "%USERPROF
 
 ```sh
      sudo systemctl restart file_watcher
-     ```
+```
 
 - **Windows (Command Prompt):**
 
 ```batch
      sc stop file_watcher
      sc start file_watcher
-     ```
+```
 
 #### Reviewing Configuration
 
