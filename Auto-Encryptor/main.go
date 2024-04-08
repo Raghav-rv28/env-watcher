@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
@@ -12,6 +13,34 @@ import (
 
 	"github.com/fsnotify/fsnotify"
 )
+
+func readEnvFile(fileLocation string) (map[string]string, error) {
+	// Open the file
+	file, err := os.Open(fileLocation)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	// Create a map to store environment variables
+	envVars := make(map[string]string)
+
+	// Read the file line by line
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		// Split each line by '='
+		parts := strings.Split(scanner.Text(), "=")
+		// Store the environment variable and its value in the map
+		envVars[parts[0]] = parts[1]
+	}
+
+	// Check for errors during scanning
+	if err := scanner.Err(); err != nil {
+		return nil, err
+	}
+
+	return envVars, nil
+}
 
 // Function to encrypt a file
 func encryptFile(filePath string, encryptionKey []byte) error {
@@ -66,6 +95,7 @@ func encryptFile(filePath string, encryptionKey []byte) error {
 func main() {
 	encryptionKey, exists := os.LookupEnv("encryption_key")
 	if !exists {
+		readEnvFile("home/raghav/.file_watcher_env")
 		fmt.Println("ENCRYPTION_KEY not found as env variable! create the env variable and try again")
 		return
 	}
