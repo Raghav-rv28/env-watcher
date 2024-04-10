@@ -108,12 +108,13 @@ func main() {
 
 	// get the environment variable file path in absolute string
 	relativePath := "~/.file_watcher_env"
-	filename, err := filepath.Abs(relativePath)
+	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println(filepath.Join(homeDir, relativePath[2:]))
 	// read env variables from the file
-	envVars, err := readEnvFile(filename)
+	envVars, err := readEnvFile(filepath.Join(homeDir, relativePath[2:]))
 	if err != nil {
 		panic(err)
 	}
