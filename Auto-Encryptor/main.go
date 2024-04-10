@@ -8,11 +8,21 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"os/user"
 	"path/filepath"
 	"strings"
 
 	"github.com/fsnotify/fsnotify"
 )
+
+func containsSubstring(s string, substrings []string) bool {
+	for _, sub := range substrings {
+		if strings.Contains(s, sub) {
+			return true
+		}
+	}
+	return false
+}
 
 func readEnvFile(fileLocation string) (map[string]string, error) {
 	// Open the file
@@ -93,18 +103,24 @@ func encryptFile(filePath string, encryptionKey []byte) error {
 }
 
 func main() {
-	encryptionKey, exists := os.LookupEnv("encryption_key")
-	if !exists {
-		readEnvFile("home/raghav/.file_watcher_env")
-		fmt.Println("ENCRYPTION_KEY not found as env variable! create the env variable and try again")
-		return
-	}
-	if len(os.Args) < 2 {
-		fmt.Println("Usage: file-watcher <path-to-watch>")
-		return
-	}
+	var encryptionKey string
+	var watchDirectory string
+	ignoreFolders := []string{".", "node_modules"}
 
-	DIRECTORY_TO_WATCH := os.Args[1]
+	// get current user to retrieve the env file.
+	currentUser, err := user.Current()
+	if err != nil {
+		panic(err)
+	}
+	envVars, err := readEnvFile("/home/" + currentUser.Username + "/.file_watcher_env")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Print(envVars)
+	// Retrieve encryptionKey, directory to watch and ignored directory.
+	encryptionKey = envVars["encryption_key"]
+	watchDirectory = envVars["watch_directory"]
+	ignoreDirManual := strings.Split(envVars["ignore_dir"], ";")
 	// Create a new file watcher
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
@@ -114,12 +130,13 @@ func main() {
 	defer watcher.Close()
 
 	// Function to walk through directory tree and watch for changes
-	filepath.Walk(DIRECTORY_TO_WATCH, func(path string, info os.FileInfo, err error) error {
+	filepath.Walk(watchDirectory, func(path string, info os.FileInfo, err error) error {
+		dirName := filepath.Base(path)
 		if err != nil {
 			fmt.Println("Error:", err)
 			return nil
 		}
-		if info.IsDir() {
+		if info.IsDir() && containsSubstring(dirName, append(ignoreDirManual, ignoreFolders...)) {
 			err = watcher.Add(path)
 			if err != nil {
 				fmt.Println("Error:", err)
