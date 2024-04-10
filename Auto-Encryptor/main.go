@@ -102,28 +102,42 @@ func encryptFile(filePath string, encryptionKey []byte) error {
 }
 
 func main() {
-	var encryptionKey string
-	var watchDirectory string
+	// var encryptionKey string
+	// var watchDirectory string
 	ignoreFolders := []string{".", "node_modules"}
-
-	// get the environment variable file path in absolute string
-	relativePath := "~/.file_watcher_env"
-	homeDir, err := os.UserHomeDir()
-	if err != nil {
-		panic(err)
+	//
+	// // get the environment variable file path in absolute string
+	// relativePath := "~/.file_watcher_env"
+	// homeDir, err := os.UserHomeDir()
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// fmt.Println(filepath.Join(homeDir, relativePath[2:]))
+	// // read env variables from the file
+	// envVars, err := readEnvFile(filepath.Join(homeDir, relativePath[2:]))
+	// if err != nil {
+	// 	panic(err)
+	// }
+	//
+	// // Retrieve encryptionKey, directory to watch and ignored directory.
+	// encryptionKey = envVars["encryption_key"]
+	// watchDirectory = envVars["watch_directory"]
+	// ignoreDirManual := strings.Split(envVars["ignore_dir"], ";")
+	encryptionKey, exists := os.LookupEnv("encryption_key")
+	if !exists {
+		panic("./file_watcher_env is missing! please remake the file as per instructions here: https://github.com/Raghav-rv28/env-watcher")
 	}
-	fmt.Println(filepath.Join(homeDir, relativePath[2:]))
-	// read env variables from the file
-	envVars, err := readEnvFile(filepath.Join(homeDir, relativePath[2:]))
-	if err != nil {
-		panic(err)
+	watchDirectory, exists := os.LookupEnv("watch_directory")
+	if !exists {
+		panic("./file_watcher_env is missing! please remake the file as per instructions here: https://github.com/Raghav-rv28/env-watcher")
 	}
+	ignoreDirStr, exists := os.LookupEnv("ignore_dir")
+	if !exists {
+		panic("./file_watcher_env is missing! please remake the file as per instructions here: https://github.com/Raghav-rv28/env-watcher")
+	}
+	ignoreDirManual := strings.Split(ignoreDirStr, ";")
 
-	// Retrieve encryptionKey, directory to watch and ignored directory.
-	encryptionKey = envVars["encryption_key"]
-	watchDirectory = envVars["watch_directory"]
-	ignoreDirManual := strings.Split(envVars["ignore_dir"], ";")
-	// Create a new file watcher
+	// start file watcher to look for changes in the given dir
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		fmt.Println("Error:", err)
