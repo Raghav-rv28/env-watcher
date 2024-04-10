@@ -143,6 +143,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## NOTES FOR AUTHOR
 
 TODO:
-1. Add options to ignore certain directories
-2. create installation scripts only for cryptor service. (Linux and Windows)
-3. add more configure options for the files being watched.
+
+1. create installation scripts only for cryptor service. (Linux and Windows)
+2. add more configure options for the files being watched.

@@ -1,6 +1,12 @@
 #!/bin/bash
 
-cd ..
+# go to home directory
+cd ~
+
+#clone the code temporarily
+git clone https://github.com/Raghav-rv28/env-watcher
+
+cd env-watcher
 
 # check if ssl is present, if not install
 if ! command -v openssl &>/dev/null; then
@@ -77,3 +83,7 @@ echo "the Auto-Encryptor will automatically ignore node_modules and directories 
 echo "file watcher is set to start on pc startup and will watch the directory: $watch_directory."
 echo "the decryption key is set to: $encryption_key."
 echo "file_watcher executable and cryptor executable are copied to /usr/local/bin"
+
+cd ~
+# delete unnecessary code
+rm -rf env-watcher
