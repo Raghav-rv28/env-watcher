@@ -34,6 +34,7 @@ fi
 # store the environment variables in a new file with restricted permissions
 echo "encryption_key=$encryption_key" >~/.file_watcher_env
 echo "watch_directory=$watch_directory" >>~/.file_watcher_env
+echo "ignore_dir=$ignore_dir" >>~/.file_watcher_env
 chmod 600 ~/.file_watcher_env
 
 # build the encryptor

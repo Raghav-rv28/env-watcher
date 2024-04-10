@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"os/user"
 	"path/filepath"
 	"strings"
 
@@ -107,16 +106,18 @@ func main() {
 	var watchDirectory string
 	ignoreFolders := []string{".", "node_modules"}
 
-	// get current user to retrieve the env file.
-	currentUser, err := user.Current()
+	// get the environment variable file path in absolute string
+	relativePath := "~/.file_watcher_env"
+	filename, err := filepath.Abs(relativePath)
 	if err != nil {
 		panic(err)
 	}
-	envVars, err := readEnvFile("/home/" + currentUser.Username + "/.file_watcher_env")
+	// read env variables from the file
+	envVars, err := readEnvFile(filename)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Print(envVars)
+
 	// Retrieve encryptionKey, directory to watch and ignored directory.
 	encryptionKey = envVars["encryption_key"]
 	watchDirectory = envVars["watch_directory"]
