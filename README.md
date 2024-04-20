@@ -5,6 +5,8 @@ You can easily decrypt those files and it will override the orignal (unencrypted
 
 DISCLAIMER: for most scenarios, **YOU DONT NEED THIS**. I have created this for people who want to keep their env files in the same repo and not have to worry about key theft.
 
+![image](https://github.com/Raghav-rv28/env-watcher/assets/62635473/5e36478c-41b7-4713-881d-703e346d2461)
+
 ## Requirements
 
 - Go programming language (for building the Encryptor and Decryptor).
